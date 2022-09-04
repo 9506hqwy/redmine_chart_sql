@@ -5,10 +5,17 @@ require File.expand_path('../../test_helper', __FILE__)
 class WikiTest < Redmine::IntegrationTest
   include Redmine::I18n
 
-  fixtures :issues,
+  fixtures :enabled_modules,
+           :enumerations,
+           :issues,
+           :member_roles,
+           :members,
            :projects,
+           :roles,
            :time_entries,
+           :users,
            :versions,
+           :wiki_content_versions,
            :wiki_contents,
            :wiki_pages,
            :wikis
