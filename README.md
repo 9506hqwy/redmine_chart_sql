@@ -20,8 +20,8 @@ This plugin provides a chart graph rendering by using SQL.
 
 The sql comment is `config` in `Chart` class constructor.
 
-This format is `-- KEY:VALUE`.
-`KEY` is dotted string, ex) `config.type: "bar"`.
+This format is `-- KEY: VALUE`.
+`KEY` is dotted string, ex) `config.type`.
 `VALUE` is value, ex) 1, true, "rgb(0, 0, 0)".
 
 The bellow key is special keyword.
