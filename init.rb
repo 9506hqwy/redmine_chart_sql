@@ -14,7 +14,7 @@ Redmine::Plugin.register :redmine_chart_sql do
   name 'Redmine Chart SQL plugin'
   author '9506hqwy'
   description 'This is a chart render macro from SQL.'
-  version '0.1.0'
+  version '0.2.0'
   url 'https://github.com/9506hqwy/redmine_chart_sql'
   author_url 'https://github.com/9506hqwy'
 
