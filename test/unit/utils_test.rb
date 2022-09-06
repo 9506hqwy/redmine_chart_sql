@@ -173,7 +173,7 @@ class UtilsTest < ActiveSupport::TestCase
     assert_equal 1, ret
   end
 
-  def test_split_sql_options
+  def test_split_sql_options_1sql
     text = "
 -- a: 1
 --- b: 2
@@ -181,9 +181,30 @@ class UtilsTest < ActiveSupport::TestCase
 
 abc
 "
-    obj = RedmineChartSql::Utils.split_sql_options(text)
+    obj = RedmineChartSql::Utils.split_sql_options(text)[0]
     assert 1, obj[:options][:a]
     assert_nil obj[:options][:b]
     assert 3, obj[:options][:c]
+  end
+
+  def test_split_sql_options_2sql
+    text = "
+-- a: 1
+--- b: 2
+-- c: 3
+
+abc;
+-- d: 4
+-- e: 5
+
+de
+"
+    obj = RedmineChartSql::Utils.split_sql_options(text)
+    Rails.logger.info(obj)
+    assert 1, obj[0][:options][:a]
+    assert_nil obj[0][:options][:b]
+    assert 3, obj[0][:options][:c]
+    assert 4, obj[1][:options][:d]
+    assert 5, obj[1][:options][:e]
   end
 end

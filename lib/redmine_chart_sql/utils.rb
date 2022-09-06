@@ -114,6 +114,7 @@ module RedmineChartSql
     def self.split_sql_options(text)
       options = {}
       sql = []
+      sqlsets = []
 
       text.split("\n").map do |line|
         if line.starts_with?('-- ')
@@ -123,32 +124,61 @@ module RedmineChartSql
           options[key] = value
         else
           sql << line
+
+          if line.rstrip.ends_with?(';')
+            sqlsets << {
+              sql: sql.join("\n"),
+              options: kv_to_hash(options),
+            }
+            options = {}
+            sql = []
+          end
+        end
+      end
+
+      if sql.present?
+        sqlsets << {
+          sql: sql.join("\n"),
+          options: kv_to_hash(options),
+        }
+      end
+
+      sqlsets
+    end
+
+    def self.sql_to_js(args, text)
+      config = {}
+      global_options = {}
+
+      split_sql_options(text).map do |result|
+        sql = result[:sql]
+        graph_options = result[:options]
+
+        if global_options.empty?
+          # only first one.
+          global_options = graph_options
+        end
+
+        table = execute_sql(sql, args)
+
+        graph_config = graph_options[:config] || {}
+        graph_config[:type] ||= 'line'
+
+        data_options = graph_config.delete(:data) || {}
+        graph_config[:data] = create_graph_data(table, data_options)
+
+        if config.empty?
+          config = graph_config
+        else
+          # only config.data.datasets.
+          config[:data][:datasets] += graph_config[:data][:datasets]
         end
       end
 
       {
-        sql: sql.join("\n"),
-        options: kv_to_hash(options),
-      }
-    end
-
-    def self.sql_to_js(args, text)
-      result = split_sql_options(text)
-      sql = result[:sql]
-      options = result[:options]
-
-      table = execute_sql(sql, args)
-
-      config = options[:config] || {}
-      config[:type] ||= 'line'
-
-      data_options = config.delete(:data) || {}
-      config[:data] = create_graph_data(table, data_options)
-
-      {
         config: config.to_json,
-        width: options[:width] || '50vw',
-        heigth: options[:height] || '50vh',
+        width: global_options[:width] || '50vw',
+        heigth: global_options[:height] || '50vh',
       }
     end
   end
