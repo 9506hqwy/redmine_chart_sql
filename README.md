@@ -1,11 +1,19 @@
 # Redmine Chart SQL
 
-This plugin provides a chart graph rendering by using SQL.
+This plugin provides a chart rendering macro by using raw SQL.
+
+## Notes
+
+This plugin has security issues by design.
+User operates Redmine database by using raw SQL.
 
 ## Features
 
-- Render chart graph using `Chart.js`.
-- Customize chart graph using sql comment.
+- Render chart by using [Chart.js](https://www.chartjs.org/).
+  - If Redmine5, Chart.js v3 built in Redmine5 is used.
+  - If Redmine4, Chart.js v2 built in Redmine4 is used.
+  - If Redmine3, Chart.js v3 built in this plugin is used.
+- Customize chart by using sql comment.
 - Macro arguments is sql placeholder.
 
 ## Installation
@@ -18,7 +26,7 @@ This plugin provides a chart graph rendering by using SQL.
 
 ## Customization
 
-The sql comment is `config` in `Chart` class constructor.
+The sql comment is `config` in [Chart class constructor](https://www.chartjs.org/docs/latest/api/classes/Chart.html#constructors).
 
 This format is `-- KEY: VALUE`.
 `KEY` is dotted string, ex) `config.type`.
@@ -27,12 +35,14 @@ This format is `-- KEY: VALUE`.
 The bellow key is special keyword.
 
 - `config.data.label_column`: specify column name to use as label (default: database column name)
-- `height`: specify image height (default; 50vh)
+- `height`: specify image height (default: 50vh)
 - `width`: specify image width (default: 50vw)
 
 see bellow examples.
 
 ## Examples
+
+This examples uses Redmine4 and PostgreSQL.
 
 - Summation spent time per day in version `1.0.0`
 
@@ -49,7 +59,7 @@ ORDER BY time_entries.spent_on
 }}
 ```
 
-- Stack spent time per activity during `1.0.0`
+- Stacked spent time per day in version `1.0.0`
 
 ```
 {{chart_sql(version=1.0.0)
@@ -83,11 +93,6 @@ SELECT
 FROM (SELECT DATE(d.*) AS day FROM generate_series('2022-08-01'::date, '2022-09-30', '2 day') AS d) AS dates
 }}
 ```
-
-## Notes
-
-This plugin has security issues by design.
-The user operations Redmine database using raw SQL.
 
 ## Tested Environment
 
