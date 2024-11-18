@@ -10,6 +10,7 @@ User operates Redmine database by using raw SQL.
 ## Features
 
 - Render chart by using [Chart.js](https://www.chartjs.org/).
+  - If Redmine6, Chart.js v3 built in Redmine6 is used.
   - If Redmine5, Chart.js v3 built in Redmine5 is used.
   - If Redmine4, Chart.js v2 built in Redmine4 is used.
   - If Redmine3, Chart.js v3 built in this plugin is used.
@@ -103,7 +104,8 @@ FROM (SELECT DATE(d.*) AS day FROM generate_series('2022-08-01'::date, '2022-09-
   * 4.2
   * 5.0
   * 5.1
+  * 6.0
 * Database
   * SQLite
-  * MySQL 5.7
+  * MySQL 5.7 or 8.0
   * PostgreSQL 12
