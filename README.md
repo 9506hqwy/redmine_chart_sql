@@ -20,9 +20,11 @@ User operates Redmine database by using raw SQL.
 ## Installation
 
 1. Download plugin in Redmine plugin directory.
+
    ```sh
    git clone https://github.com/9506hqwy/redmine_chart_sql.git
    ```
+
 2. Start Redmine
 
 ## Customization
@@ -47,7 +49,7 @@ This examples uses Redmine4 and PostgreSQL.
 
 - Summation spent time per day in version `1.0.0`
 
-```
+```sql
 {{chart_sql(1.0.0)
 -- config.data.label_column: "spent_on"
 
@@ -62,7 +64,7 @@ ORDER BY time_entries.spent_on
 
 - Stacked spent time per day in version `1.0.0`
 
-```
+```sql
 {{chart_sql(version=1.0.0)
 -- config.type: "bar"
 -- config.options.scales.xAxes[0].stacked: true
@@ -97,15 +99,14 @@ FROM (SELECT DATE(d.*) AS day FROM generate_series('2022-08-01'::date, '2022-09-
 
 ## Tested Environment
 
-* Redmine (Docker Image)
-  * 3.4
-  * 4.0
-  * 4.1
-  * 4.2
-  * 5.0
-  * 5.1
-  * 6.0
-* Database
-  * SQLite
-  * MySQL 5.7 or 8.0
-  * PostgreSQL 12
+- Redmine (Docker Image)
+  - 4.0
+  - 4.1
+  - 4.2
+  - 5.0
+  - 5.1
+  - 6.0
+- Database
+  - SQLite
+  - MySQL 5.7 or 8.0
+  - PostgreSQL 14
