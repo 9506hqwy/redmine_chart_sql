@@ -106,6 +106,7 @@ FROM (SELECT DATE(d.*) AS day FROM generate_series('2022-08-01'::date, '2022-09-
   - 5.0
   - 5.1
   - 6.0
+  - 6.1
 - Database
   - SQLite
   - MySQL 5.7 or 8.0
