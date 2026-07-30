@@ -23,11 +23,15 @@ Redmine::Plugin.register :redmine_chart_sql do
     macro :chart_sql do |obj, args, text|
       graph = RedmineChartSql::Utils.sql_to_js(args, text)
 
-      if (Redmine::VERSION::ARRAY <=> [5.0]) >= 0
+      if (Redmine::VERSION::ARRAY <=> [7.0]) >= 0
+        # TODO: use ES module.
+        # https://www.redmine.org/issues/44018
+        lib = javascript_include_tag('chart.min.js', plugin: :redmine_chart_sql)
+      elsif (Redmine::VERSION::ARRAY <=> [5.0]) >= 0
         lib = javascript_include_tag('chart.min.js')
       elsif (Redmine::VERSION::ARRAY <=> [4.0]) >= 0
         lib = javascript_include_tag('Chart.bundle.min')
-      else
+      else # rubocop:disable Style/DuplicateBranch
         lib = javascript_include_tag('chart.min.js', plugin: :redmine_chart_sql)
       end
 
