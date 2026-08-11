@@ -10,7 +10,7 @@ User operates Redmine database by using raw SQL.
 ## Features
 
 - Render chart by using [Chart.js](https://www.chartjs.org/).
-  - If Redmine7, Chart.js v3 built in this plugin is used.
+  - If Redmine7, Chart.js v4 built in Redmine7 is used.
   - If Redmine6, Chart.js v3 built in Redmine6 is used.
   - If Redmine5, Chart.js v3 built in Redmine5 is used.
   - If Redmine4, Chart.js v2 built in Redmine4 is used.

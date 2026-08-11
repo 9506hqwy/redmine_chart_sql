@@ -7,6 +7,9 @@
     },
     "files": {
         "includes": [
+            "assets/**/*.css",
+            "assets/**/*.js",
+            "!assets/**/chart.min.js",
             "src/**/*.css",
             "src/**/*.js",
             "src/**/*.ts",
